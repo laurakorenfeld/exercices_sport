@@ -1,0 +1,380 @@
+{
+  "openapi": "3.0.0",
+  "swagger": "3.0",
+  "info": {
+   "description": "Projet API",
+   "version": "1.0.0",
+   "title": "Exerices de sport"
+ },
+ "tags": [
+   {
+     "name": "Recherche d'exercices de sport",
+     "description": "Cette api permet de rechercher des exercices de sport à effectuer en fonction de critères prédéfnis."
+   }
+ ],
+ "paths": {
+   "/": {
+     "post": {
+       "tags": [
+         "Page d'accueil"
+       ],
+       "summary": "Permet d'effectuer la recherche. La page contient un formulaire. En fonction de ce que l'on remplit, celui-ci nous renvoie faire une page json avec les exercices correspondant à nos critères.",
+       "responses": {
+         "200": {
+           "description": "La page s'affiche",
+           "schema": {
+             "$ref": "#/components/schemas/id"
+           }
+         }
+       }
+     },
+       "responses": {
+         "201": {
+           "description": "Affiche les exercices voulus en fonction des critères",
+           "schema": {
+             "$ref": "#/"
+           }
+         },
+         "400": {
+           "description": "Problème dans la recherche."
+         }
+       }
+     }
+   },
+   
+   "/inscrits/<int:id>": {
+     "get": {
+       "tags": [
+         "Inscrits"
+       ],
+       "summary": "Affiche le nom de tous ceux qui ont effectué une recherche sur le site.",
+       "responses": {
+         "200": {
+           "description": "Page json avec les inscrits et leurs informations",
+           "schema": {
+             "$ref": "#/components/schemas/id"
+           }
+         },
+         "400": {
+           "description": "Affiche les informations de l'inscrit recherché en fonction de l'id."
+         },
+         "404": {
+           "description": "Il n'y a pas d'inscrit avec cet identifiant."
+         }
+       }
+     },
+     "put": {
+       "summary": "Ajouter une personne",
+       "tags": [
+         "Inscrits"
+       ],
+       "parameters": [
+         {
+           "in": "path",
+           "surname": "nom",
+           "name" : "prenom",
+           "required": true,
+           "description": "Nom  et prénomde famille de la personne à inscrire",
+           "schema": {
+             "$ref": "#/components/schemas/inscrits" }  
+         }
+       ],
+       "requestBody": {
+         "description": "Recheche d'inscrit",
+         "required": true,
+         "content": {
+           "application/json": {
+             "schema": {
+               "$ref": "#/components/schemas/inscrits"
+             }
+           }
+         }
+       },
+       "produces": [
+         "application/json"
+       ],
+       "responses": {
+         "200": {
+           "description": "OK",
+           "schema": {
+             "$ref": "#/components/schemas/id"
+           }
+         },
+         "400": {
+           "description": "Failed. Bad post data."
+         }
+       }
+     },
+     "delete": {
+       "summary": "Effacer un inscrit en renseignant son nom et son prénom`",
+       "tags": [
+         "Inscrits"
+       ],
+       "parameters": [
+         {
+           "in": "path",
+           "name": "id",
+           "required": true,
+           "description": "Book Request Id",
+           "schema": {
+             "$ref": "#/components/schemas/id"
+           }
+         }
+       ],
+       "responses": {
+         "204": {
+           "description": "OK",
+           "schema": {
+             "$ref": "#/components/schemas/id"
+           }
+         },
+         "400": {
+           "description": "Failed. Misunderstood Request."
+         },
+         "404": {
+           "description": "Failed. Book Request not found."
+         }
+       }
+     }
+  
+ },
+ "/exercices": {
+  "get": {
+    "tags": [
+      "Excercices"
+    ],
+    "summary": "Affiche tous les exercices de la base de données avec leurs caractéristiques.",
+    "responses": {
+      "200": {
+        "description": "Page json avec les exercices et leurs informations",
+        "schema": {
+          "$ref": "#/components/schemas/id"
+        }
+      },
+      "400": {
+        "description": "Problème dans la requête."
+      },
+      "404": {
+        "description": "La recherche n'a pas fonctionné."
+      }
+    }
+  },
+  "post": {
+    "summary": "Ajouter un exercice",
+    "tags": [
+      "Exercices"
+    ],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "description": "Book Request id",
+        "schema": {
+          "$ref": "#/components/schemas/id"
+        }
+      }
+    ],
+    "requestBody": {
+      "description": "Book Request Object",
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/id"
+          }
+        }
+      }
+    },
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "200": {
+        "description": "OK",
+        "schema": {
+          "$ref": "#/components/schemas/id"
+        }
+      },
+      "400": {
+        "description": "Failed. Bad post data."
+      }
+    }
+  },
+  "delete": {
+    "summary": "Effacer un livre en renseignant son nom et son prénom`",
+    "tags": [
+      "Inscrits"
+    ],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "description": "Book Request Id",
+        "schema": {
+          "$ref": "#/components/schemas/id"
+        }
+      }
+    ],
+    "responses": {
+      "204": {
+        "description": "OK",
+        "schema": {
+          "$ref": "#/components/schemas/id"
+        }
+      },
+      "400": {
+        "description": "Failed. Misunderstood Request."
+      },
+      "404": {
+        "description": "Failed. Book Request not found."
+      }
+    }
+  }
+},
+"/exercices/int:id>": {
+  "get": {
+    "tags": [
+      "Excercices"
+    ],
+    "summary": "Affiche tous les exercices de la base de données avec leurs caractéristiques.",
+    "responses": {
+      "200": {
+        "description": "Page json avec les exercices et leurs informations",
+        "schema": {
+          "$ref": "#/components/schemas/id"
+        }
+      },
+      "400": {
+        "description": "Problème dans la requête."
+      },
+      "404": {
+        "description": "La recherche n'a pas fonctionné."
+      }
+    }
+  },
+  "post": {
+    "summary": "Ajouter un exercice",
+    "tags": [
+      "Exercices"
+    ],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "description": "Book Request id",
+        "schema": {
+          "$ref": "#/components/schemas/id"
+        }
+      }
+    ],
+    "requestBody": {
+      "description": "Book Request Object",
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/"
+          }
+        }
+      }
+    },
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "200": {
+        "description": "OK",
+        "schema": {
+          "$ref": "#/components/schemas/id"
+        }
+      },
+      "400": {
+        "description": "Failed. Bad post data."
+      }
+    }
+  },
+  "delete": {
+    "summary": "Effacer un livre en renseignant son nom et son prénom`",
+    "tags": [
+      "Inscrits"
+    ],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "description": "Book Request Id",
+        "schema": {
+          "$ref": "#/components/schemas/id"
+        }
+      }
+    ],
+    "responses": {
+      "204": {
+        "description": "OK",
+        "schema": {
+          "$ref": "#/components/schemas/id"
+        }
+      },
+      "400": {
+        "description": "Failed. Misunderstood Request."
+      },
+      "404": {
+        "description": "Failed. Book Request not found."
+      }
+    }
+  }
+},
+ "components": {
+   "schemas": {
+     "id": {
+       "properties": {
+         "uuid": {
+           "type": "string"
+         }
+       }
+     },
+     "inscrits": {
+       "type": "object",
+       "properties": {
+
+     }},
+     "exercice": {
+       "type": "object",
+       "properties": {
+         "nom": {
+           "type": "string",
+           "format": "string"
+         },
+         "intensite": {
+           "type": "string",
+           "format": "string"
+         },
+         "materiel": {
+           "type": "string",
+           "format": "string"
+         },
+         "compagnie": {
+          "type": "string",
+          "format": "string"
+        }
+      }
+       }
+     },
+     "bookRequests": {
+       "type": "object",
+       "properties": {
+         "bookRequest": {
+           "type": "object",
+           "additionalProperties": {
+             "$ref": "#/components/schemas/exercice"
+           }
+         }
+       }
+     }
+    }
+  }
+ 

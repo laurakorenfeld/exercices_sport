@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Mes objectifs</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="style.css"/>
+    </head>
+    <body>
+        <header>
+            <h1>Salut {{prenom}}! </h1>
+            <h3>Voici les objectifs que tu as enregistrés</h3>
+        </header>
+        <main>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Objectifs visés | Sport | Heures à passer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for objectif in objectif %}
+                    <tr>
+                        <td>{{ objectif[0] }} kcal | {{ objectif[1] }} | {{ objectif[2] }} h</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <a href="{{ url_for('index') }}">Retour à l'accueil</a>
+        </main>
+        <footer>
+            <p>Laura Korenfeld - EPISEN - ITS2 FISA</p>
+        </footer>
+    </body>
+</html>

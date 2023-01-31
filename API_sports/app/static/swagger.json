@@ -1,0 +1,432 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Exercices de sport",
+    "description": "Cette API permet de rechercher des exercices de sport selon vos critères.",
+    "version": "1.0.11"
+  },
+  "host": "localhost:5000",
+  "basePath": "/",
+  "schemes": [
+      "http"
+  ],
+  "paths": {
+      "/exercices": {
+          "get": {
+              "description": "Récupère tous les exercices de la base de données",
+              "responses": {
+                  "200": {
+                      "description": "Liste des exercices",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                "type": "array",
+                                "items": {
+                                  "$ref": "#/components/schemas/Exercice"
+                                }
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "post": {
+              "description": "Ajoute un exercice à la base de données",
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "nom": {
+                          "type": "string"
+                        },
+                        "calh": {
+                          "type": "number"
+                        },
+                        "met": {
+                          "type": "number"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "materiel": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "responses": {
+                  "201": {
+                      "description": "Exercice créé avec succès"
+                  }
+              }
+          }
+      },
+      "/exercices/recupere_nom": {
+          "get": {
+              "description": "Recherche un exercice par son nom et redirige vers la page de celui-ci",
+              "parameters": [
+                  {
+                      "name": "nom",
+                      "in": "query",
+                      "required": true,
+                      "schema": {
+                        "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "302": {
+                      "description": "Redirection vers la page de l'exercice trouvé"
+                  }
+              }
+          }
+      },
+      "/exercices/recupere_selection": {
+        "get": {
+            "description": "Permet de récupérer la sélection d'un exercice effectuée par un utilisateur",
+            "responses": {
+                "200": {
+                    "description": "Exercice sélectionné"
+                },
+                "404": {
+                    "description": "Aucun exercice sélectionné"
+                }
+            }
+        }
+      },
+    "/exercices/{recherche}": {
+        "get": {
+            "description": "Permet de récupérer les informations d'un exercice en fonction de son nom",
+            "parameters": [{
+                "name": "recherche",
+                "in": "path",
+                "description": "Nom de l'exercice recherché",
+                "required": true,
+                "type": "string"
+            }],
+            "responses": {
+                "200": {
+                    "description": "Exercice trouvé",
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "nom": {
+                                    "type": "string"
+                                },
+                                "kcalh": {
+                                    "type": "number"
+                                },
+                                "met": {
+                                    "type": "number"
+                                },
+                                "type": {
+                                    "type": "string"
+                                },
+                                "materiel": {
+                                    "type": "string"
+                                },
+                                "id": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                },
+                "404": {
+                    "description": "Exercice non trouvé"
+                }
+            }
+        },
+        "post": {
+            "description": "Permet d'ajouter un exercice",
+            "parameters": [{
+                "name": "nom",
+                "in": "formData",
+                "description": "Nom de l'exercice",
+                "required": true,
+                "type": "string"
+            }, {
+                "name": "calh",
+                "in": "formData",
+                "description": "Calories brûlées par heure",
+                "required": true,
+                "type": "number"
+            }, {
+                "name": "met",
+                "in": "formData",
+                "description": "Métabolisme équivalent",
+                "required": true,
+                "type": "number"
+            }, {
+                "name": "type",
+                "in": "formData",
+                "description": "Induviduel ou en équipe",
+                "required": true,
+                "type": "string"
+            }, {
+                "name": "materiel",
+                "in": "formData",
+                "description": "Besoin de matériel ou non",
+                "required": true,
+                "type": "string"
+            }]
+          },
+        "delete":{"description": "Permet d'effacer un exercice",
+        "parameters": [{
+            "name": "nom",
+            "in": "formData",
+            "description": "Nom de l'exercice",
+            "required": true,
+            "type": "string"
+        }]
+        }
+      },
+      "/": {
+        "post": {
+            "tags": [
+                "Exercices"
+            ],
+            "summary": "Retourne les exercices correspondants aux critères de recherche",
+            "description": "Retourne les exercices correspondants aux critères de recherche (intensité, matériel, type d'exercice)",
+            "parameters": [
+                {
+                    "name": "intensite",
+                    "in": "formData",
+                    "description": "Intensité de l'exercice (faible, modérée, intense)",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "name": "materiel",
+                    "in": "formData",
+                    "description": "Indique si l'exercice nécessite un matériel (oui, non)",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "name": "groupe",
+                    "in": "formData",
+                    "description": "Type d'exercice (cardio, musculation, etc.)",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "Exercices correspondants aux critères de recherche",
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "nom": {
+                                    "type": "string"
+                                },
+                                "calh": {
+                                    "type": "number"
+                                },
+                                "met": {
+                                    "type": "number"
+                                },
+                                "avecqui": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "get": {
+            "tags": [
+                "Exercices"
+            ],
+            "summary": "Retourne la liste des noms d'exercices",
+            "responses": {
+                "200": {
+                    "description": "Liste des noms d'exercices",
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+      },
+      "/inscrits": {
+        "post": {
+            "summary": "Inscription d'un utilisateur non renseigné dans la base de données",
+            "description": "Permet à un utilisateur non renseigné dans la base de données d'être ajouté. S'il est déjà inscrit, il sera redirigé vers sa page d'objectif",
+            "responses": {
+                "201": {
+                    "description": "La personne a été ajoutée à la base de données"
+                },
+                "401": {
+                    "description": "Veuillez renseigner les champs"
+                }
+            },
+            "parameters": [
+                {
+                    "name": "nom",
+                    "in": "formData",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "name": "prenom",
+                    "in": "formData",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "name": "objectif",
+                    "in": "formData",
+                    "required": false,
+                    "type": "string"
+                },
+                {
+                    "name": "objectif_sport",
+                    "in": "formData",
+                    "required": false,
+                    "type": "string"
+                }
+            ]
+        },
+        "get": {
+            "summary": "Récupération de la liste des inscrits",
+            "responses": {
+                "200": {
+                    "description": "Liste des inscrits",
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "nom": {
+                                    "type": "string"
+                                },
+                                "prenom": {
+                                    "type": "string"
+                                },
+                                "objectif": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/inscrits/{id}": {
+        "get": {
+            "summary": "Récupération d'un inscrit par son ID",
+            "responses": {
+                "200": {
+                    "description": "Inscrit trouvé",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "nom": {
+                                "type": "string"
+                            },
+                            "prenom": {
+                                "type": "string"
+                            },
+                            "objectif": {
+                                "type": "string"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      }
+  },
+  "/inscrits/{id}": {
+    "parameters": [
+        {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+                "type": "integer"
+            }
+        }
+    ],
+    "get": {
+        "responses": {
+            "200": {
+                "description": "A user with the specified ID",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Personne"
+                        }
+                    }
+                }
+            },
+            "404": {
+                "description": "A user with the specified ID does not exist"
+            }
+        }
+    },
+    "put": {
+        "requestBody": {
+            "content": {
+                "application/x-www-form-urlencoded": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "nom": {
+                                "type": "string"
+                            },
+                            "prenom": {
+                                "type": "string"
+                            },
+                            "objectif": {
+                                "type": "integer"
+                            }
+                        },
+                        "required": ["nom", "prenom", "objectif"]
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Successfully updated the user with the specified ID",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/UpdatedInscrit"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "delete": {
+        "responses": {
+            "201": {
+                "description": "Successfully deleted the user with the specified ID"
+            }
+        }
+      }
+    }
+}
+  

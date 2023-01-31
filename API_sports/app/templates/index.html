@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Exercices de sport</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="/static/index.css">
+    </head>
+    <body>
+        <header>
+            <h1>Exercices de sport en fonction de mon objectif</h1>
+        </header>
+        <main>
+            <h5>La barre de recherche permet de retrouver un exercice de sport par son nom. Essayez "Surf", "Bowling" ou "Boxe" par exemple. Vous obtenez le nombre moyen de calories brûlées par heure en effectuant cet exercice (pour un individu de poids moyen).</h5>
+            <form method="post" action="/exercices/recupere_nom">
+                <nav>
+                    <input type="text" placeholder="Nom de l'exercice" aria-label="recherche" name="recherche" id="recherche">
+                    <button type="submit">Rechercher</button><br><br> 
+            </form>
+            </nav> 
+            <nav>
+            <form method="post" action="/exercices/recupere_selection">
+                <label for="exercise-select">OU</label>
+                <select id="exercise-select" name="exercise-select">
+                    {% for name in exos %}
+                    <option value="{{ name }}">{{ name }} </option>
+                    {% endfor %}
+                </select>  
+                <button type="submit">Rechercher</button><br><br>           
+            </form>
+            </nav>
+                <form method="post" action="/inscrits">
+                <fieldset>
+                        <legend>Informations personnelles</legend>
+                        <h5>Vous n'êtes pas obligé de vous inscrire mais si vous le souhaitez, vous pouvez renseigner ces informations afin de garder une trace de vos objectifs</h5>
+                        <label for="nom">Nom :</label>
+                        <input type="text" name="nom" id="nom"/>
+                        <label for="prenom">Prénom :</label>
+                        <input type="text" name="prenom" id="prenom"/>
+                        <button type="submit">M'inscrire / Voir mes objectifs</button><br>  
+                        <br><br>
+                        
+                        <fieldset>
+                        <legend>Ajouter un objectif</legend>
+                        <h3>Combien d'heure de ce sport pour atteindre mon objectif ?</h3>
+                        <label for="objectif_sport"> Avec quel sport ?</label>
+                        <input type="text" name="objectif_sport" id="objectif_sport"/>
+                        <label for="objectif">Combien de kcal souhaitez vous brûler ?</label>
+                        <input type="text" name="objectif" id="objectif"/>
+                        <button type="submit">Envoyer</button><br>  
+                    </fieldset>
+                    </form>  
+                    <form method ="post">              
+                    </fieldset>
+                <fieldset><legend>Effectuer une recherche en fonction de :</legend>
+                    <fieldset>
+                        <legend>Intensité de l'exercice</legend>
+                        <label for="faible">Faible</label>
+                        <input type="radio" name="intensite" id="faible" value="faible"/><br>
+                        <label for="moderee">Modérée</label>
+                        <input type="radio" name="intensite" id="moderee" value="moderee" checked="checked"/><br>
+                        <label for="intense">Intense</label>
+                        <input type="radio" name="intensite" id="intense" value="intense"/><br>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Matériel nécessaire</legend>
+                        <label for="nomat">Sans matériel :</label>
+                        <input type="radio" name="materiel" id="nomat" value="nomat" checked="checked"/><br>
+                        <label for="mat">Avec matériel :</label>
+                        <input type="radio" name="materiel" id="mat"value="mat"/><br>
+                    </fieldset>
+                    <fieldset>
+                    <legend>Accompagnement</legend>
+                    <label for="seul">Individuel :</label>
+                    <input type="radio" name="groupe" id="individuel" value="individuel" checked="checked"/><br>
+                    <label for="groupe">En équipe :</label>
+                    <input type="radio" name="groupe" id="equipe" value="equipe"/><br>
+                    </fieldset>
+                    <button type="submit">Envoyer</button>
+                </fieldset>
+                
+                </form>
+                </main>
+                <footer>
+                     <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/exercices">Base de données avec tous les exercices disponibles</a><br><br>
+                        </li>
+                    </ul><br><br>
+                <p>Laura Korenfeld - EPISEN - ITS2 FISA</p>
+                </footer>
+                </body>
+                
+                </html>
